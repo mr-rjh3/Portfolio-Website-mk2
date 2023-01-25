@@ -54,7 +54,7 @@ body {
   
 }
 body.is-toggled > .tiles > .tile:hover{
-  opacity: 0.1 !important;
+  opacity: 0.7;
 }
 /* SCROLLBAR */
 /* width */
@@ -164,7 +164,6 @@ svg{
   left:0;
   z-index: 1;  
   display: grid;
-  opacity: 0.7;
   grid-template-columns: repeat(var(--columns), 1fr);
   grid-template-rows: repeat(var(--rows), 1fr);
 }
@@ -176,10 +175,12 @@ svg{
 
 .tile:hover:before {
   background-color: rgb(30, 30, 30);
+  opacity: 0.5; /* inital opacity when hovering*/
 }
 
 .tile:before { 
   background-color: rgb(15, 15, 15);
+  opacity: 0.7; /* inital opacity */
   content: "";
   inset: 0.5px;
   position: absolute;
@@ -189,6 +190,7 @@ svg{
 .content-container{
   z-index: 3;
   margin-top: 0;
+  /* margin-left: 5rem; */
   position: relative;
   top: 110vh;
 
@@ -196,16 +198,24 @@ svg{
 }
 
 section{
-  padding-top: 5rem;
+  padding-bottom: 15rem;
 }
 
 .header-container{
-    /* background-color: var(--color-primary-400); */
+    background-color: var(--color-primary-400);
     position: relative; 
     top: 0;
     left: 0;
     width: 100%;
   }
+.header-container::after, .header-container::before{
+  content: '';
+  display: block;
+  width: 100%;
+  height: 4px;
+  opacity: 0.5;
+  background-color: var(--color-neutral-900);
+}
 .header-container > h2{
   color: #fff;
 }
@@ -250,22 +260,48 @@ h2 {
         color: var(--color-neutral-100);
         gap: 15rem;
     }
+    .circle{
+        width: 20rem;
+        height: 20rem;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+
     .boxes {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 1rem;
+        row-gap: 3rem;
+        column-gap: 2rem;
     }
     .box {
-        border-radius: 15px;
-        text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 15px;
+      text-align: center;
     }
     .box img {
-        object-fit: cover;
-        width: 20rem;
-        height: 20rem;
-        transition: filter 200ms ease;
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+      transition: filter 200ms ease;
+
     }
-    .box p {
+    .box a{
+      
+      position: relative;
+      display: block;
+      width: 20rem;
+      height: 20rem;
+      color: #FFFFFF;
+      text-decoration: none;
+      
+      
+    }
+    .box a > p {
       pointer-events: none;
       opacity: 0;
       position: relative;
@@ -276,13 +312,11 @@ h2 {
       transform: translate(-50%, -50%);  
       font-size: 1.5rem;
       font-weight: 700;
-        
     }
-    .box a:hover > img{
-      filter: grayscale(50%);
-      transition: filter 200ms ease;
+    .box a > img:hover{
+      filter: brightness(0.5);
     }
-    .box a:hover p{
+    .box a > img:hover + p{
       opacity: 1;
     }
   
@@ -330,6 +364,7 @@ h2 {
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow-x: hidden;
     height: 100%;
   }
   .nav-item{
@@ -339,9 +374,6 @@ h2 {
     margin-top: auto;
   }
 
-  
-  
-  
   .nav-link {
       display: flex;
       align-items: center;

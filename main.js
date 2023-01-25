@@ -6,7 +6,6 @@ const TILE_SIZE = 50; // Tile size (100px if the window width is greater than 80
 const root = document.querySelector(':root');
 
 // INITAL TITLE ANIMATION
-
 var textWrapper = document.querySelector('.title .letters');
 textWrapper.innerHTML = textWrapper.textContent.replace(/([^\x00-\x80]|\w)/g, "<span class='letter'>$&</span>") // Wrap every letter in a span
 textWrapper = document.querySelector('.subtitle .letters');
@@ -55,7 +54,7 @@ anime.timeline()
 
 
 
-
+// GRID ANIMATION
 const tilesElement = document.querySelector('.tiles') // name-header element
 const headerElement = document.body // header element
 let columns = Math.floor(headerElement.clientWidth / TILE_SIZE) // number of columns in the header (get the height of the header and divide it by the tile size)
@@ -95,7 +94,7 @@ const tileClick = (index) => { // Handles the click event on the tile
     // this is the code for the tile animation
     anime({
         targets: '.tile', // targets the tile element
-        opacity: toggled ? 0.3 : 0.8,
+        opacity: toggled ? Math.random() * (0.5 - 0.2) + 0.2 : Math.random() * (1 - 0.6) + 0.6, // changes the opacity of the tile to 0.4 if the animation is toggled, otherwise it changes it to a random number between 0.4 and 1
         // backgroundColor: colors[count %(colors.length - 1)], // changes the background color to black
         delay: anime.stagger(50, {grid: [columns, rows], from: index}), // stagger the animation by 50ms from the index of the tile
     })
@@ -120,3 +119,34 @@ const refreshTiles = () => { // Recalculate the tiles in the header on window re
 }
 refreshTiles() // calls refreshTiles function
 window.onresize = refreshTiles // calls refreshTiles function when the window is resized
+
+
+// PROJECTS ANIMATION
+
+var boxEl = document.querySelectorAll('.box a');
+
+function animateBox(el, scale, duration, elasticity) {
+    anime.remove(el);
+    anime({
+      targets: el,
+      scale: scale,
+      duration: duration,
+      elasticity: elasticity,
+    });
+  }
+function enterBox(el) {
+    animateBox(el, 1.1, 400, 200);
+}
+function leaveBox(el) {
+    animateBox(el, 1, 400, 200);
+}
+
+for (var i = 0; i < boxEl.length; i++) {
+boxEl[i].addEventListener('mouseenter', function(e) {
+    enterBox(e.target);
+}, false);
+
+boxEl[i].addEventListener('mouseleave', function(e) {
+    leaveBox(e.target)
+}, false);  
+}
