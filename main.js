@@ -57,7 +57,7 @@ anime.timeline()
 
 
 const tilesElement = document.querySelector('.tiles') // name-header element
-const headerElement = document.querySelector('.name-header') // header element
+const headerElement = document.body // header element
 let columns = Math.floor(headerElement.clientWidth / TILE_SIZE) // number of columns in the header (get the height of the header and divide it by the tile size)
 let rows = Math.floor((headerElement.clientHeight) / TILE_SIZE) // number of rows in the header (get the width of the header and divide it by the tile size)
 
@@ -92,11 +92,12 @@ const toggle = () => { // Toggles the animation
 const tileClick = (index) => { // Handles the click event on the tile
     toggle() // calls toggle function
     count++
+    // this is the code for the tile animation
     anime({
         targets: '.tile', // targets the tile element
-        opacity: toggled ? 0 : 1,
+        opacity: toggled ? 0.3 : 0.8,
         // backgroundColor: colors[count %(colors.length - 1)], // changes the background color to black
-        delay: anime.stagger(50, {grid: [columns, rows], from: index}), // stagger the animation by 50ms
+        delay: anime.stagger(50, {grid: [columns, rows], from: index}), // stagger the animation by 50ms from the index of the tile
     })
 }
 

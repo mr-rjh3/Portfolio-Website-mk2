@@ -15,7 +15,7 @@
   --ff-primary: 'Roboto', sans-serif;
   --ff-secondary: 'Playfair Display', serif;
 
-  --nav-stop: 100vh;
+  --tile-height: 100vh;
 
   --columns: 10;
   --rows: 10;
@@ -24,6 +24,12 @@
   --g1: rgb(98, 0, 234);
   --g2: rgb(236, 64, 122);
 }
+html, body{
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
 html {
   scroll-behavior: smooth;
 }
@@ -31,30 +37,23 @@ html {
   box-sizing: border-box;
 }
 body {
-  margin-left: 5rem;
-  overflow-x: hidden;
-  display: flex;
-  flex-direction: column;
-  font-family: var(--ff-primary);
-  background-color: var(--color-primary-100);
-  font-weight: 400;
-  font-size: 1.3125rem;
-  line-height: 1.6;
-  min-height: 300vh;
-  
-}
-body.is-toggled > .name-header{
   background: linear-gradient(
     to right,
     var(--g1),
     var(--g2),
     var(--g1)
   );
+  /* margin-left: 5rem; */
+  overflow-x: hidden;
+  font-family: var(--ff-primary);
+  background-color: var(--color-primary-100);
+  font-weight: 400;
+  font-size: 1.3125rem;
+  line-height: 1.6;
+  /* min-height: 300vh; */
+  
 }
-body.is-toggled > .name-header > .title{
-  color: var(--font-color-black);
-}
-body.is-toggled > .name-header > .tiles > .tile:hover{
+body.is-toggled > .tiles > .tile:hover{
   opacity: 0.1 !important;
 }
 /* SCROLLBAR */
@@ -81,25 +80,20 @@ svg{
   width: 1rem;
 }
 /* NAME HEADER */
-.name-header{
-  background: linear-gradient(
-    to right,
-    var(--g1),
-    var(--g2),
-    var(--g1)
-  );
-  position: absolute; 
+/* .name-header{
+  
+  position: relative; 
   top: 0;
   left: 0;
   width: 100%;
-  height: var(--nav-stop);
-}
+  height: var(--tile-height);
+} */
 .title{
   white-space: nowrap;
   left: 50%;
   position: absolute;
   top: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -80%);
   color: var(--font-color-white);
   margin: 0px;
   pointer-events: none;
@@ -115,11 +109,11 @@ svg{
   left: 50%;
   position: absolute;
   top: 50%;
-  transform: translate(-50%, 60%);
+  transform: translate(-50%, 0%);
   color: var(--font-color-white);
   margin: 0px;
   pointer-events: none;
-  font-family: var(--ff-primary);
+  font-family: var(--ff-secondary);
   font-weight: 700;
   font-size: 2.5rem;
   text-align: center;
@@ -163,13 +157,14 @@ svg{
 }
 
 .tiles {
-  /* margin-left: 5rem; */
   height: calc(100vh - 1px);
   width: calc(100vw - 1px);
-  position: relative;
-  z-index: 1;
-  
+  position: fixed;
+  top:0;
+  left:0;
+  z-index: 1;  
   display: grid;
+  opacity: 0.7;
   grid-template-columns: repeat(var(--columns), 1fr);
   grid-template-rows: repeat(var(--rows), 1fr);
 }
@@ -183,7 +178,7 @@ svg{
   background-color: rgb(30, 30, 30);
 }
 
-.tile:before {
+.tile:before { 
   background-color: rgb(15, 15, 15);
   content: "";
   inset: 0.5px;
@@ -191,16 +186,28 @@ svg{
 }
 
 /* CONTENT */
-section{
-    position: relative;
-    top: 110vh;
+.content-container{
+  z-index: 3;
+  margin-top: 0;
+  position: relative;
+  top: 110vh;
+
+  backdrop-filter: blur(5px);
 }
+
+section{
+  padding-top: 5rem;
+}
+
 .header-container{
-    background-color: var(--color-primary-400);
-    position: absolute; 
+    /* background-color: var(--color-primary-400); */
+    position: relative; 
     top: 0;
     left: 0;
     width: 100%;
+  }
+.header-container > h2{
+  color: #fff;
 }
 h2 {
     font-family: var(--ff-primary);
@@ -208,8 +215,101 @@ h2 {
     font-size: 2rem;
     line-height: 1.6;
     text-align: center;
-    color: var(--color-neutral-900);
+    /* color: var(--color-neutral-900); */
 }
+
+  /* Media Query (if using a larger screen) */
+  @media(min-width: 40em){ 
+    .navbar{
+      top: 0;
+    }
+    .logo{
+      font-weight: bold;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      text-align: center;
+      width: 100%;
+    }
+    .logo svg{
+      transform: rotate(0deg);
+      transition: transform 200ms;
+    }
+    .navbar:hover .logo svg{
+      transform: rotate(180deg);
+    }
+    .logo .nav-link:hover svg{
+      animation: none;
+      transform: rotate(270deg);
+    }
+  }
+  /* CONTENT CSS */
+    .split {
+        display: flex;
+        flex-direction: column;
+        padding: 1rem;
+        color: var(--color-neutral-100);
+        gap: 15rem;
+    }
+    .boxes {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1rem;
+    }
+    .box {
+        border-radius: 15px;
+        text-align: center;
+    }
+    .box img {
+        object-fit: cover;
+        width: 20rem;
+        height: 20rem;
+        transition: filter 200ms ease;
+    }
+    .box p {
+      pointer-events: none;
+      opacity: 0;
+      position: relative;
+      margin: 0;
+      padding: 0;
+      top: -50%;
+      left: 50%;
+      transform: translate(-50%, -50%);  
+      font-size: 1.5rem;
+      font-weight: 700;
+        
+    }
+    .box a:hover > img{
+      filter: grayscale(50%);
+      transition: filter 200ms ease;
+    }
+    .box a:hover p{
+      opacity: 1;
+    }
+  
+    @media(min-width: 40em){
+        .split {
+            flex-direction: row;
+        }
+        .split > * {  /* this is a CSS combinator which selets all direct children of .split */
+            flex-basis: 50%;
+        }
+        
+        .split > * + * { /* this is a CSS combinator which selects all direct children of .split that are preceded by a sibling */
+            margin-left: 2rem;
+        }
+    }
+
+  
+    .content{
+        margin-inline: auto;
+        margin-top: 7rem;
+        width: min(90%, 70.5rem);
+    }
+    img {
+        max-width: 100%;
+        border-radius: 15px;
+    }
+  
 
 /* NAVBAR CSS */
   .navbar {
@@ -271,6 +371,7 @@ h2 {
   .link-text{
     display: none;
     margin-left: 1rem;
+    transition: opacity 200ms;
   }
   .nav-link svg{
     min-width: 2rem;
@@ -342,65 +443,6 @@ h2 {
         right: 1rem;
       }
 }
-  /* Media Query (if using a larger screen) */
-@media(min-width: 40em){ 
-  .navbar{
-    top: 0;
-  }
-  .logo{
-    font-weight: bold;
-    text-transform: uppercase;
-    margin-bottom: 1rem;
-    text-align: center;
-    width: 100%;
-  }
-  .logo svg{
-    transform: rotate(0deg);
-    transition: transform 200ms;
-  }
-  .navbar:hover .logo svg{
-    transform: rotate(180deg);
-  }
-  .logo .nav-link:hover svg{
-    animation: none;
-    transform: rotate(270deg);
-  }
-}
-/* CONTENT CSS */
-  .split {
-      display: flex;
-      flex-direction: column;
-      padding: 1rem;
-      color: var(--color-neutral-100)
-  }
-
-  @media(min-width: 40em){
-      .split {
-          flex-direction: row;
-      }
-      .split > * {  /* this is a CSS combinator which selets all direct children of .split */
-          flex-basis: 100%;
-      }
-      
-      .split > * + * { /* this is a CSS combinator which selects all direct children of .split that are preceded by a sibling */
-          margin-left: 2em;
-      }
-  }
-  .bg-dark {
-      background-color: var(--color-neutral-900);
-      border-radius: 15px;
-  }
-
-  .content{
-      margin-inline: auto;
-      margin-top: 7rem;
-      width: min(90%, 70.5rem);
-  }
-  img {
-      max-width: 100%;
-      border-radius: 15px;
-  }
-
 /* FOOTER CSS */
 
 footer {
