@@ -7,9 +7,9 @@ const root = document.querySelector(':root');
 
 // INITAL TITLE ANIMATION
 var textWrapper = document.querySelector('.title .letters');
-textWrapper.innerHTML = textWrapper.textContent.replace(/([^\x00-\x80]|\w)/g, "<span class='letter'>$&</span>") // Wrap every letter in a span
+textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>") // Wrap every letter in a span
 textWrapper = document.querySelector('.subtitle .letters');
-textWrapper.innerHTML = textWrapper.textContent.replace(/([^\x00-\x80]|\w)/g, "<span class='letter'>$&</span>") // Wrap every letter in a span
+textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>") // Wrap every letter in a span
 
 anime.timeline()
   .add({
@@ -24,7 +24,7 @@ anime.timeline()
   .add({
     // move line to the right of the title
     targets: '.title .line',
-    translateX: [0, document.querySelector('.title .letters').getBoundingClientRect().width + 10],
+    translateX: [0, document.querySelector('.title .letters').getBoundingClientRect().width + 20],
     easing: "easeOutExpo",
     duration: 700,
     delay: 200
@@ -34,9 +34,9 @@ anime.timeline()
     opacity: [0,1],
     easing: "easeOutExpo",
     duration: 600,
-    delay: anime.stagger(30)
+    delay: anime.stagger(33)
   },'-=730').add({
-    // move line to the bottom of the title
+    // Remove the line
     targets: '.title .line',
     scaleY: [1,0],
     easing: "easeOutExpo",
@@ -48,7 +48,7 @@ anime.timeline()
     opacity: [0,1],
     easing: "easeOutExpo",
     duration: 600,
-    delay: anime.stagger(30, {from: 'center'})
+    delay: anime.stagger(30)
     });
 
 
@@ -94,7 +94,7 @@ const tileClick = (index) => { // Handles the click event on the tile
     // this is the code for the tile animation
     anime({
         targets: '.tile', // targets the tile element
-        opacity: toggled ? Math.random() * (0.5 - 0.2) + 0.2 : Math.random() * (1 - 0.6) + 0.6, // changes the opacity of the tile to 0.4 if the animation is toggled, otherwise it changes it to a random number between 0.4 and 1
+        opacity: toggled ? Math.random() * (0.4 - 0.2) + 0.2 : Math.random() * (1 - 0.6) + 0.6, // changes the opacity of the tile to 0.4 if the animation is toggled, otherwise it changes it to a random number between 0.4 and 1
         // backgroundColor: colors[count %(colors.length - 1)], // changes the background color to black
         delay: anime.stagger(50, {grid: [columns, rows], from: index}), // stagger the animation by 50ms from the index of the tile
     })
@@ -126,7 +126,7 @@ window.onresize = refreshTiles // calls refreshTiles function when the window is
 var boxEl = document.querySelectorAll('.box a');
 
 function animateBox(el, scale, duration, elasticity) {
-    anime.remove(el);
+    anime.remove(el); // remove any existing animations
     anime({
       targets: el,
       scale: scale,
@@ -140,6 +140,9 @@ function enterBox(el) {
 function leaveBox(el) {
     animateBox(el, 1, 400, 200);
 }
+function clickBox(el) {
+    animateBox(el, 0.95, 400, 200);
+}
 
 for (var i = 0; i < boxEl.length; i++) {
 boxEl[i].addEventListener('mouseenter', function(e) {
@@ -149,4 +152,116 @@ boxEl[i].addEventListener('mouseenter', function(e) {
 boxEl[i].addEventListener('mouseleave', function(e) {
     leaveBox(e.target)
 }, false);  
+
+boxEl[i].addEventListener('touchstart', function(e) {
+    enterBox(e.target);
+}, false);
+boxEl[i].addEventListener('touchend', function(e) {
+    leaveBox(e.target)
+}, false);
+boxEl[i].addEventListener('click', function(e) {
+    clickBox(e.target)
+}, false);
 }
+
+// SCROLL ANIMATION
+var sectionsTravelled = [false, false, false];
+textWrapper = document.querySelector('.profile');
+textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='profileLetter'>$&</span>") // Wrap every letter in a span
+textWrapper = document.querySelector('.education h1');
+textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='educationH1'>$&</span>") // Wrap every letter in a span
+textWrapper = document.querySelector('.education h3');
+textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='educationH3'>$&</span>") // Wrap every letter in a span
+
+const profileAnimation = anime.timeline({autoplay: false})
+    .add({
+    // fade in the line and title
+    targets: '.circle',
+    translateX: [-100,0],
+    opacity: [0,1],
+    easing: "easeOutExpo",
+    duration: 1000,
+    delay: 200,
+    })
+    .add({
+    targets: '.profile span',
+    opacity: [0,1],
+    easing: "easeOutExpo",
+    duration: 700,
+    delay: anime.stagger(10),
+    });
+
+const projectAnimation = anime({
+                            targets: '.box',
+                            opacity: [0,1],
+                            translateY: [-100,0],
+                            easing: "easeOutExpo",
+                            duration: 1000,
+                            delay: anime.stagger(100),
+                            autoplay: false
+                        });
+
+const educationAnimation = anime.timeline({autoplay: false})
+        .add({
+            // fade in the line and title
+            targets: '.square',
+            translateX: [-100,0],
+            opacity: [0,1],
+            easing: "easeOutExpo",
+            duration: 1000,
+            delay: 200,
+            })
+            .add({
+            targets: '.education span',
+            opacity: [0,1],
+            easing: "easeOutExpo",
+            duration: 700,
+            delay: anime.stagger(10),
+            });
+
+function animateScroll() {
+    const currentScroll = window.pageYOffset;
+    const sectionElements = document.querySelectorAll('Section');
+    const sectionPositions = [];
+    sectionElements.forEach((section) => {
+        sectionPositions.push(section.offsetTop + window.innerHeight *1.1);
+    });
+    console.log(currentScroll, sectionPositions[0], sectionPositions[1], sectionPositions[2]);
+    if(currentScroll > sectionPositions[0] - 100 && currentScroll < sectionPositions[1] - 100) {
+        console.log(sectionElements[0]);
+        // animate profile section
+        console.log(sectionsTravelled[0]);
+        if(sectionsTravelled[0] != true) {
+            profileAnimation.play();
+            profileAnimation.finished.then(() => {
+                sectionsTravelled[0] = true;
+            });
+        }   
+    }
+    if(currentScroll > sectionPositions[1] - 100 && currentScroll < sectionPositions[2] - 100) {
+        console.log(sectionElements[1]);
+        // animate project section
+        console.log(sectionsTravelled[1]);
+        if(sectionsTravelled[1] != true) {
+            projectAnimation.play();
+            projectAnimation.finished.then(() => {
+                sectionsTravelled[1] = true;
+            });
+        }   
+    }
+    if(currentScroll > sectionPositions[2] - 100) {
+        console.log(sectionElements[2]);
+        // animate Education section
+        console.log(sectionsTravelled[2]);
+        if(sectionsTravelled[2] != true) {
+            educationAnimation.play();
+            educationAnimation.finished.then(() => {
+                sectionsTravelled[2] = true;
+            });
+        }   
+    }
+
+}
+
+animateScroll();
+window.onscroll = animateScroll;
