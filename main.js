@@ -135,13 +135,23 @@ function animateBox(el, scale, duration, elasticity) {
     });
   }
 function enterBox(el) {
-    animateBox(el, 1.1, 400, 200);
+    animateBox(el, 1.05, 400, 200);
 }
 function leaveBox(el) {
     animateBox(el, 1, 400, 200);
 }
-function clickBox(el) {
-    animateBox(el, 0.95, 400, 200);
+function clickBox(el, scale, duration, elasticity) {
+    anime.remove(el); // remove any existing animations
+    anime({
+      targets: el,
+      keyframes: [
+        {scale: scale, duration: duration/2},
+        {scale: 1, duration: duration/2},
+        ],
+      scale: scale,
+      duration: duration,
+      elasticity: elasticity,
+    });
 }
 
 for (var i = 0; i < boxEl.length; i++) {
@@ -160,7 +170,7 @@ boxEl[i].addEventListener('touchend', function(e) {
     leaveBox(e.target)
 }, false);
 boxEl[i].addEventListener('click', function(e) {
-    clickBox(e.target)
+    clickBox(e.target, 0.97, 150, 500)
 }, false);
 }
 
@@ -188,7 +198,7 @@ const profileAnimation = anime.timeline({autoplay: false})
     opacity: [0,1],
     easing: "easeOutExpo",
     duration: 700,
-    delay: anime.stagger(10),
+    delay: anime.stagger(5),
     });
 
 const projectAnimation = anime({
@@ -227,7 +237,7 @@ function animateScroll() {
         sectionPositions.push(section.offsetTop + window.innerHeight *1.1);
     });
     console.log(currentScroll, sectionPositions[0], sectionPositions[1], sectionPositions[2]);
-    if(currentScroll > sectionPositions[0] - 100 && currentScroll < sectionPositions[1] - 100) {
+    if(currentScroll > sectionPositions[0] - 300 && currentScroll < sectionPositions[1] - 300) {
         console.log(sectionElements[0]);
         // animate profile section
         console.log(sectionsTravelled[0]);
@@ -238,7 +248,7 @@ function animateScroll() {
             });
         }   
     }
-    if(currentScroll > sectionPositions[1] - 100 && currentScroll < sectionPositions[2] - 100) {
+    if(currentScroll > sectionPositions[1] - 300 && currentScroll < sectionPositions[2] - 300) {
         console.log(sectionElements[1]);
         // animate project section
         console.log(sectionsTravelled[1]);
@@ -249,7 +259,7 @@ function animateScroll() {
             });
         }   
     }
-    if(currentScroll > sectionPositions[2] - 100) {
+    if(currentScroll > sectionPositions[2] - 300) {
         console.log(sectionElements[2]);
         // animate Education section
         console.log(sectionsTravelled[2]);

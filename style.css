@@ -92,6 +92,26 @@ body.is-toggled > .tiles > .tile:hover{
 ::-webkit-scrollbar-thumb:hover {
   background: rgb(85,85,85); /* Add a hover effect */
 }
+@media(max-width: 40em){
+  /* SCROLLBAR */
+/* width */
+::-webkit-scrollbar {
+  height: 0.2rem;
+}
+/* Track */
+::-webkit-scrollbar-track {
+  display: none;
+  background-color: var(--color-primary-100);
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(136,136,136); /* Set a background color */
+}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(85,85,85); /* Add a hover effect */
+}
+}
 
 svg{
   width: 1rem;
@@ -172,6 +192,15 @@ svg{
   display: inline-block;
   line-height: 1em;
 }
+@media screen and (max-width: 40em) {
+  .title{
+    font-size: 3rem;
+  }
+  .subtitle{
+    font-size: 1.5rem;
+  }
+}
+  
 
 .tiles {
   height: calc(100vh - 1px);
@@ -216,12 +245,12 @@ svg{
   padding-bottom: 23rem;
 }
 .header-container{
-    background-color: rgba(37, 3, 80, 0.3);
+    background-color: rgba(37, 3, 80, 0.5);
     position: relative; 
     top: 0;
     left: 0;
     width: 100%;
-    backdrop-filter: grayscale(90%) blur(5px);
+    backdrop-filter: grayscale(90%) blur(3px);
   }
 .header-container::after, .header-container::before{
   content: '';
@@ -244,11 +273,11 @@ h2 {
 }
 
 .content{
-  background-color: rgba(34, 34, 34, 0.3);
+  background-color: rgba(34, 34, 34, 0.5);
   padding-top: 10rem;
   padding-bottom: 15rem;
   margin-inline: auto;
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(3px);
 
 }
 #Projects .content{
@@ -256,6 +285,13 @@ h2 {
   padding-bottom: 10rem;
 
 }
+@media screen and (max-width: 40em){
+  .content{
+    padding-top: 5rem;
+    padding-bottom: 10rem;
+  }
+}
+
 .split {
     display: flex;
     flex-direction: column;
@@ -307,6 +343,42 @@ h2 {
     font-size: 1.5rem;
     font-weight: 400;
 }
+@media(min-width: 40em){
+  .split {
+      flex-direction: row;
+  }
+  .split > * {  /* this is a CSS combinator which selets all direct children of .split */
+      flex-basis: 50%;
+  }
+  
+  .split > * + * { /* this is a CSS combinator which selects all direct children of .split that are preceded by a sibling */
+      margin-left: 2rem;
+  }
+}
+
+@media screen and (max-width: 40em){
+  .split{
+    padding: 0.5rem;
+    margin-left: 2rem;
+    margin-right: 2rem;
+  }
+  .circle{
+    padding-bottom: 3rem;
+  }
+  .circle > *{
+    width: 75%;
+    height: 75%;
+    border-radius: 50%;
+  }
+  .square > *{
+    height: 10rem;
+  }
+  .text > *{
+    font-size: 1rem;
+    font-weight: 400;
+  }
+}
+
 
 .boxes {
     display: grid;
@@ -362,25 +434,33 @@ h2 {
 .box a > img:hover + p{
   opacity: 1;
 }
-
-@media(min-width: 40em){
-    .split {
-        flex-direction: row;
-    }
-    .split > * {  /* this is a CSS combinator which selets all direct children of .split */
-        flex-basis: 50%;
-    }
-    
-    .split > * + * { /* this is a CSS combinator which selects all direct children of .split that are preceded by a sibling */
-        margin-left: 2rem;
-    }
+@media screen and (max-width: 40em){
+  .boxes{
+    width: 100%;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+  .box{
+    padding-bottom: 1rem;
+  }
+  .box a{
+    width: 12rem;
+    height: 12rem;    
+  }
+  .box a > p{
+    opacity: 1;
+    top : 8%;
+    font-size: 1rem;
+    font-weight: 400;
+  }
 }
+
 img {
     max-width: 100%;
     border-radius: 15px;
 }
 
-  /* Media Query (if using a larger screen) */
+/* NAVBAR CSS */
+/* Media Query (if using a larger screen) */
   @media(min-width: 40em){ 
     .navbar{
       top: 0;
@@ -404,10 +484,6 @@ img {
       transform: rotate(270deg);
     }
   }
-    
-  
-
-/* NAVBAR CSS */
   .navbar {
       background-color: var(--color-primary-300);
       position: fixed; 
@@ -495,19 +571,23 @@ img {
         margin-left: 0;
       }
       .navbar{
-        bottom: 0;
+        top: 0;
         width: 100vw;
-        height: 5rem;
+        height: 3.5rem;
       }
       .navbar:hover {
         width: 100vw
       }
       .navbar-list{
+        overflow-y: hidden;
+        overflow-x: scroll;
         flex-direction: row;
         width: 100%;
+
       }
       .logo{
         margin-bottom: 0;
+        height: 3.5rem;
         transform: rotate(270deg);
         justify-content: center;
       }
@@ -519,6 +599,7 @@ img {
         animation-direction: alternate;
       }
       .nav-link{
+        height: 3.5rem;
         justify-content: center;
       }
       .navbar:hover .link-text{
@@ -531,10 +612,6 @@ img {
       @keyframes navAnimation {
         from {transform: translateY(0);}
         to {transform: translateY(-0.5rem);}
-      }
-      #topButton{
-        bottom: 6rem;
-        right: 1rem;
       }
 }
 /* FOOTER CSS */
