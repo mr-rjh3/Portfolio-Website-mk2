@@ -3,6 +3,5 @@
 import { defineConfig } from "vite";
 
 export default defineConfig({ 
-  base: '/Portfolio-Website-mk2/'
-  
+  base: '/',
   })

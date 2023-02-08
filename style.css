@@ -92,7 +92,7 @@ body.is-toggled > .tiles > .tile:hover{
 ::-webkit-scrollbar-thumb:hover {
   background: rgb(85,85,85); /* Add a hover effect */
 }
-@media(max-width: 40em){
+@media(max-width: 55em){
   /* SCROLLBAR */
 /* width */
 ::-webkit-scrollbar {
@@ -192,7 +192,7 @@ svg{
   display: inline-block;
   line-height: 1em;
 }
-@media screen and (max-width: 40em) {
+@media screen and (max-width: 55em) {
   .title{
     font-size: 3rem;
   }
@@ -250,6 +250,7 @@ svg{
     top: 0;
     left: 0;
     width: 100%;
+    -webkit-backdrop-filter: grayscale(90%) blur(3px);
     backdrop-filter: grayscale(90%) blur(3px);
   }
 .header-container::after, .header-container::before{
@@ -277,6 +278,7 @@ h2 {
   padding-top: 10rem;
   padding-bottom: 15rem;
   margin-inline: auto;
+  -webkit-backdrop-filter: blur(3px);
   backdrop-filter: blur(3px);
 
 }
@@ -285,7 +287,7 @@ h2 {
   padding-bottom: 10rem;
 
 }
-@media screen and (max-width: 40em){
+@media screen and (max-width: 55em){
   .content{
     padding-top: 5rem;
     padding-bottom: 10rem;
@@ -343,7 +345,7 @@ h2 {
     font-size: 1.5rem;
     font-weight: 400;
 }
-@media(min-width: 40em){
+@media(min-width: 55em){
   .split {
       flex-direction: row;
   }
@@ -356,7 +358,7 @@ h2 {
   }
 }
 
-@media screen and (max-width: 40em){
+@media screen and (max-width: 55em){
   .split{
     padding: 0.5rem;
     margin-left: 2rem;
@@ -366,8 +368,8 @@ h2 {
     padding-bottom: 3rem;
   }
   .circle > *{
-    width: 75%;
-    height: 75%;
+    width: 50%;
+    height: 50%;
     border-radius: 50%;
   }
   .square > *{
@@ -434,7 +436,7 @@ h2 {
 .box a > img:hover + p{
   opacity: 1;
 }
-@media screen and (max-width: 40em){
+@media screen and (max-width: 55em){
   .boxes{
     width: 100%;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -461,7 +463,7 @@ img {
 
 /* NAVBAR CSS */
 /* Media Query (if using a larger screen) */
-  @media(min-width: 40em){ 
+  @media(min-width: 55em){ 
     .navbar{
       top: 0;
     }
@@ -508,7 +510,7 @@ img {
   .nav-item{
     width: 100%;
   }
-  .nav-item:nth-last-child(2){
+  .nav-item:nth-last-child(3){
     margin-top: auto;
   }
 
@@ -566,7 +568,7 @@ img {
 
   
   /* Media Query (if using a smaller screen) */
-    @media(max-width: 40em){
+    @media(max-width: 55em){
       body{
         margin-left: 0;
       }
