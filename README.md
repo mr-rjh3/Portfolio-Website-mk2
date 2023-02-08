@@ -2,7 +2,7 @@
 
 The second iteration of my portfolio website. Made as an exercise to get more familiar with front-end development and experiment with the Anime.js library.
 
-<a href="rileyhuston.dev">rileyhuston.dev</a>
+<a href="https://rileyhuston.dev/">CLICK HERE TO GO TO THE WEBSITE</a>
 
 <img src="https://user-images.githubusercontent.com/98052534/215285689-4519003c-8963-440d-a384-2c216716a0c5.png" height="425"> <img src="https://user-images.githubusercontent.com/98052534/215286080-af2ece0c-d32d-45a5-8005-901c7048c5c3.png" height="425">
 
