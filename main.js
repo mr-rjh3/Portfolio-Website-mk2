@@ -119,7 +119,7 @@ const refreshTiles = () => { // Recalculate the tiles in the header on window re
 }
 refreshTiles() // calls refreshTiles function
 window.onresize = refreshTiles // calls refreshTiles function when the window is resized
-
+      
 
 // PROJECTS ANIMATION
 
@@ -202,7 +202,7 @@ const profileAnimation = anime.timeline({autoplay: false})
     });
 
 const projectAnimation = anime({
-                            targets: '.box',
+                            targets: '.boxes.active .box',
                             opacity: [0,1],
                             translateY: [-100,0],
                             easing: "easeOutExpo",
@@ -272,6 +272,70 @@ function animateScroll() {
     }
 
 }
+
+// ARROW BUTTON CONTROLS
+const arrowButtons = document.querySelectorAll('.round')
+const boxesElements = document.querySelectorAll('.boxes')
+var currentBoxesElement = 0
+
+function updateBoxes() {
+    // animate the boxes being removed
+    anime.remove('.boxes.active .box') // remove any existing animations
+    anime({
+        targets: '.boxes.active .box',
+        opacity: [1,0],
+        translateY: [0,100],
+        easing: "easeOutExpo",
+        duration: 1000,
+        delay: anime.stagger(150, {direction: 'reverse'}),
+        complete: function() {
+            // remove the active class from all boxes elements
+            boxesElements.forEach(boxesElement => boxesElement.classList.remove('active'))
+            // add the active class to the current boxes element
+            boxesElements[currentBoxesElement].classList.add('active')
+            // animate the boxes being added
+            anime({
+                targets: '.boxes.active .box',
+                opacity: [0,1],
+                translateY: [-100,0],
+                easing: "easeOutExpo",
+                duration: 1000,
+                delay: anime.stagger(100),
+            })
+            
+        }
+    })
+    
+
+    
+}
+
+arrowButtons.forEach(arrowButton => arrowButton.addEventListener('click', el => {
+    // animate the button
+    clickBox(arrowButton, 0.97, 150, 500)
+    // check which button was clicked
+    console.log(arrowButton.querySelector('.arrow.right'))
+    if(arrowButton.querySelector('.arrow.left') != null) {
+        // left button was clicked
+        currentBoxesElement--
+    }
+    if(arrowButton.querySelector('.arrow.right') != null) {
+        // right button was clicked
+        currentBoxesElement++
+    }
+
+    // cycle to the next boxes element
+    // if the current boxes element is the first one, cycle to the last one
+    if (currentBoxesElement < 0) {
+        currentBoxesElement = boxesElements.length - 1
+    }
+    else if (currentBoxesElement >= boxesElements.length)  {
+        currentBoxesElement = 0
+    }
+    // update the boxes element
+    console.log(currentBoxesElement)
+    updateBoxes()
+}))
 
 animateScroll();
 window.onscroll = animateScroll;
