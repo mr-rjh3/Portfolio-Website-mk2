@@ -301,13 +301,14 @@ h2 {
     margin-left: 5rem;
     margin-right: 5rem;
     color: var(--color-neutral-100);
+    align-items: center;
 }
-.square{
+.long-square{
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.square > *{
+.long-square > *{
     object-fit: cover;
     height: 20rem;
     width: 30rem;
@@ -315,6 +316,20 @@ h2 {
     align-items: center;
     flex-direction: column;
 }
+.square{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.square > *{
+    object-fit: cover;
+    height: 32rem;
+    width: 32rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
 .circle{
     opacity: 0;
     display: flex;
@@ -373,6 +388,10 @@ h2 {
     border-radius: 50%;
   }
   .square > *{
+    height: 20rem;
+    width: 20rem;
+  }
+  .long-square > *{
     height: 10rem;
   }
   .text > *{

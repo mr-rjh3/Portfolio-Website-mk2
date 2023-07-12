@@ -186,7 +186,7 @@ textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='edu
 const profileAnimation = anime.timeline({autoplay: false})
     .add({
     // fade in the line and title
-    targets: '.circle',
+    targets: '.square',
     translateX: [-100,0],
     opacity: [0,1],
     easing: "easeOutExpo",
