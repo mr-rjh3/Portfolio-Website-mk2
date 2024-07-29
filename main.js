@@ -178,22 +178,27 @@ boxEl[i].addEventListener('click', function(e) {
 var sectionsTravelled = [false, false, false];
 textWrapper = document.querySelector('.profile');
 textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='profileLetter'>$&</span>") // Wrap every letter in a span
-textWrapper = document.querySelector('.education h1');
-textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='educationH1'>$&</span>") // Wrap every letter in a span
-textWrapper = document.querySelector('.education h3');
-textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='educationH3'>$&</span>") // Wrap every letter in a span
+let textWrappers = document.querySelectorAll('.education h1');
+for(let i = 0; i < textWrappers.length; i++){
+    textWrappers[i].innerHTML = textWrappers[i].textContent.replace(/\S/g, "<span class='educationH1'>$&</span>") // Wrap every letter in a span
+}
+textWrappers = document.querySelectorAll('.education h3');
+for(let i = 0; i < textWrappers.length; i++){
+    textWrappers[i].innerHTML = textWrappers[i].textContent.replace(/\S/g, "<span class='educationH3'>$&</span>") // Wrap every letter in a span
+}
 
 const profileAnimation = anime.timeline({autoplay: false})
     .add({
-    // fade in the line and title
-    targets: '.square',
-    translateX: [-100,0],
-    opacity: [0,1],
-    easing: "easeOutExpo",
-    duration: 1000,
-    delay: 200,
+        // fade in the image
+        targets: '.square',
+        translateX: [-100,0],
+        opacity: [0,1],
+        easing: "easeOutExpo",
+        duration: 1000,
+        delay: 200,
     })
     .add({
+    // fade in the line and title
     targets: '.profile span',
     opacity: [0,1],
     easing: "easeOutExpo",
@@ -213,15 +218,16 @@ const projectAnimation = anime({
 
 const educationAnimation = anime.timeline({autoplay: false})
         .add({
-            // fade in the line and title
-            targets: '.square',
+            // Fade in image
+            targets: '.long-square',
             translateX: [-100,0],
             opacity: [0,1],
             easing: "easeOutExpo",
             duration: 1000,
-            delay: 200,
-            })
-            .add({
+            delay: anime.stagger(500),
+        })
+        .add({
+            // fade in the line and title
             targets: '.education span',
             opacity: [0,1],
             easing: "easeOutExpo",

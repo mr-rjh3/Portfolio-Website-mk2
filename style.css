@@ -35,9 +35,7 @@ html, body{
   padding: 0;
   height: 100%;
   width: 100%;
-}
-html {
-  scroll-behavior: smooth;
+  scroll-behavior: smooth !important;
 }
 *, *::before, *::after{
   box-sizing: border-box;
